@@ -1,100 +1,131 @@
-<?php
-if (!isset($_SESSION)) {
-    session_start();
-}
-?>
-
-<!-- panggil koneksi database -->
-<?php
-include_once("koneksi.php");
-?>
-
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Sistem Informasi Poliklinik</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Starter</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="app/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="app/dist/css/adminlte.min.css">
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.php">Home</a>
-                </li>
-                <?php 
-                    if (isset($_SESSION['username'])) {
-                        // menu master jika user sudah login
-                    
-                ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Master</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="index.php?page=obat">Obat</a>
-                        </li>
-                    </ul>
-                </li>
-                <?php 
-                }
-                ?>
-            </ul>
-            
-            <?php
-            if (isset($_SESSION['username'])) {
-                // Jika pengguna sudah login, tampilkan tombol "Logout"
-            ?>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Logout.php">Logout (<?php echo $_SESSION['username'] ?>)</a>
-                    </li>
-                </ul>
-            <?php
-            } else {
-                // Jika pengguna belum login, tampilkan tombol "Login" dan "Register"
-            ?>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=registerUser">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=loginUser">Login</a>
-                    </li>
-                </ul>
-            <?php
-            }
-            ?>            
-        </div>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <?php include('components/navbar.php') ?>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+      <!-- Sidebar -->
+      <?php include('components/sidebar.php') ?>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the card's
+                    content.
+                  </p>
+
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+
+              <div class="card card-primary card-outline">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the card's
+                    content.
+                  </p>
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div><!-- /.card -->
+            </div>
+            <!-- /.col-md-6 -->
+            <div class="col-lg-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="m-0">Featured</h5>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-title">Special title treatment</h6>
+
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h5 class="m-0">Featured</h5>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-title">Special title treatment</h6>
+
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-md-6 -->
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
     </div>
-</nav>
+    <!-- /.content-wrapper -->
 
-<!-- <h1>Hello, world!</h1> -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
 
-<main role="main" class="container">
-    <?php
-    if (isset($_GET['page'])) {
-        include($_GET['page'] . ".php");
-    } else {
-        echo "<br><h2>Selamat Datang di Sistem Informasi Poliklinik";
+    <!-- Main Footer -->
+    <?php include('components/footer.php') ?>
 
-        if (isset($_SESSION['username'])) {
-            //jika sudah login tampilkan username
-            echo ", " . $_SESSION['username'] . "</h2><hr>";
-        } else {
-            echo "</h2><hr>Silakan Login untuk menggunakan sistem. Jika belum memiliki akun silakan Register terlebih dahulu.";
-        }
-    }
-    ?>
-</main>
+  </div>
+  <!-- ./wrapper -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="app/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="app/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="app/dist/js/adminlte.min.js"></script>
 </body>
+
 </html>
