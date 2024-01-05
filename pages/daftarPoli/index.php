@@ -46,10 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         // Ambil data poli dari database dan isi dropdown
                                         require "config/koneksi.php";
                                         $resultPoli = mysqli_query($koneksi, "SELECT * FROM poli");
-                                        while ($rowPoli = mysqli_fetch_assoc($resultPoli)) {
-                                            echo "<option value='" . $rowPoli['id'] . "'>" . $rowPoli['poli'] . "</option>";
-                                        }
-                                        ?>
+                                        while ($rowPoli = mysqli_fetch_assoc($resultPoli)) { ?>
+                                            <option value="<?php echo $rowPoli['id'] ?>">
+                                                <?php echo $rowPoli['nama_poli'] ?>
+                                            </option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
