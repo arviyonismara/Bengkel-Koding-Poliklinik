@@ -94,7 +94,7 @@
                     <?php } else { ?>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="daftarPasien.php" class="nav-link">
+                                <a href="index.php" class="nav-link">
                                     <i class="fas fa-solid fa-hospital-user nav-icon"></i>
                                     <p>Pasien Baru <span class="right badge badge-info">Pasien</span></p>
                                 </a>

@@ -1,5 +1,5 @@
 <?php
-// include('../crud_pasien/daftar_poli.php');
+include('config/koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $no_rm = $_POST["no_rm"];
@@ -37,13 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php
                     if ($_SERVER["REQUEST_METHOD"] == "POST" && mysqli_num_rows($result) > 0) {
                     ?>
-                        <form method="post" id="pasienForm" action="crud_pasien/daftar_poli.php">
+                        <form method="post" id="pasienForm" action="pages/daftarPoli/daftarPoli.php">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Poli</label>
                                     <select class="form-control" name="id_poli">
                                         <?php
                                         // Ambil data poli dari database dan isi dropdown
+                                        require "config/koneksi.php";
                                         $resultPoli = mysqli_query($koneksi, "SELECT * FROM poli");
                                         while ($rowPoli = mysqli_fetch_assoc($resultPoli)) {
                                             echo "<option value='" . $rowPoli['id'] . "'>" . $rowPoli['poli'] . "</option>";
@@ -53,9 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label>Dokter</label>
-                                    <select class="form-control" name="id_dokter">
+                                    <select class="form-control" name="dokter">
                                         <?php
                                         // Ambil data dokter dari database dan isi dropdown
+                                        require "config/koneksi.php";
                                         $resultDokter = mysqli_query($koneksi, "SELECT * FROM dokter");
                                         while ($rowDokter = mysqli_fetch_assoc($resultDokter)) {
                                             echo "<option value='" . $rowDokter['id'] . "'>" . $rowDokter['nama'] . "</option>";
@@ -65,16 +67,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label>Jadwal</label>
-                                    <select class="form-control" name="id_jadwal">
+                                    <select class="form-control" name="jadwal">
                                         <?php
-                                        $resultJadwal = mysqli_query($koneksi, "SELECT * FROM jadwal_periksa");
-                                        while ($rowJadwal = mysqli_fetch_assoc($resultJadwal)) {
-                                            echo "<option value='" . $rowJadwal['id'] . "'>" . $rowJadwal['jam_mulai'] . " s/d " . $rowJadwal['jam_selesai'] . "</option>";
+                                        require "config/koneksi.php";
+                                        $poliId = $_POST['poliId'];
+                                        $query = "SELECT jadwal_periksa.id as idJadwal, dokter.nama, jadwal_periksa.hari, DATE_FORMAT(jadwal_periksa.jam_mulai, '%H:%i') as jamMulai, DATE_FORMAT(jadwal_periksa.jam_selesai, '%H:%i') as jamSelesai FROM jadwal_periksa INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE poli.id = '$poliId'";
+                                        $result = mysqli_query($koneksi, $query);
+                                        if (mysqli_num_rows($result) > 0) {
+                                            $jadwalOptions = "";
+                                            while ($dataJadwal = mysqli_fetch_assoc($result)) {
+                                                $jadwalOptions .= "<option value='" . $dataJadwal['idJadwal'] . "'>" . $dataJadwal['nama'] . ' - ' . $dataJadwal['hari'] . ' ' . $dataJadwal['jamMulai'] . ' - ' . $dataJadwal['jamSelesai'] . "</option>";
+                                            }
+                                            // Kirim data jadwal ke AJAX
+                                            echo $jadwalOptions;
+                                        } else {
+                                            echo "<option value=''>Jadwal tidak ditemukan</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" name="keluhan">
                                     <label>Keluhan</label>
                                     <input type="text" class="form-control" placeholder="Masukkan keluhan" name="keluhan">
                                 </div>
