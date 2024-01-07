@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-session_start();
-?>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -22,53 +19,50 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-
-        <!-- Navbar -->
-        <?php include('components/navbar.php') ?>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <?php include('components/sidebarPasien.php') ?>
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <?php include('pages/daftarPasien/index.php') ?>
-            <!-- /.content -->
+    <div class="container">
+        <div class="jumbotron text-center mt-5">
+            <h1 class="display-4">Selamat Datang di Poliklinik</h1>
+            <p class="lead"></p>
+            <hr class="my-4">
+            <p class="h3">Silahkan login terlebih dahulu.</p>
+            <!-- <a class="btn btn-primary btn-lg" href="login.php" role="button">Login</a> -->
         </div>
-        <!-- /.content-wrapper -->
 
-        <!-- Main Footer -->
+        <div class="row justify-content-lg-center">
+            <div class="col-md-6 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-sharp fa-solid fa-hospital-user mb-3 text-primary" style="font-size: 34px;"></i>
+                        <h3 class="">Pasien</h3>
+                        <p class="card-text">Apabila anda adalah seorang Pasien, Silahkan tekan tombol dibawah untuk melakukan pendaftaran pasien</p>
+                        <a href="daftarPasien.php" class="btn btn-primary btn-block">Pendaftaran Pasien</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <i class="fa-sharp fa-solid fa-hospital-user"></i> -->
+            <div class="col-md-6 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-user-nurse fa-fw mb-3 text-success" style="font-size: 34px;"></i>
+                        <h3 class="">Dokter</h3>
+                        <p class="card-text">Apabila anda adalah seorang Dokter, silahkan Login terlebih dahulu untuk
+                            memulai melayani pasien</p>
+                        <div class="d-grid">
+                            <a href="login.php" class="btn btn-success btn-block">Login Sebagai Dokter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- ./wrapper -->
 
-    <!-- REQUIRED SCRIPTS -->
 
-    <!-- jQuery -->
+
     <script src="app/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="app/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="app/dist/js/adminlte.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#poli').on('change', function() {
-                var poliId = $(this).val();
-
-                // Mengambil data jadwal berdasarkan poli yang dipilih
-                $.ajax({
-                    type: 'POST',
-                    url: 'getJadwal.php', // Ganti dengan path file get_jadwal.php sesuai dengan struktur proyek Anda
-                    data: {
-                        poliId: poliId
-                    },
-                    success: function(data) {
-                        $('#jadwal').html(data);
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

@@ -162,17 +162,15 @@
                                         <td>
                                             <?php
                                             require 'config/koneksi.php';
-                                            $cekJadwalPeriksa = "SELECT * FROM daftar_poli INNER JOIN jadwal_periksa ON daftar_poli.id_jadwal = jadwal_periksa.id WHERE jadwal_periksa.id_dokter = '$id_dokter' AND daftar_poli.status_periksa = '0'";
+                                            $cekJadwalPeriksa = "SELECT jadwal_periksa.id_dokter, jadwal_periksa.status FROM jadwal_periksa";
                                             $queryCekJadwal = mysqli_query($koneksi, $cekJadwalPeriksa);
-                                            if (mysqli_num_rows($queryCekJadwal) > 0) {
-
+                                            $row = mysqli_fetch_assoc($queryCekJadwal);
+                                            if ($row['status'] == 0) {
+                                                echo '<a class="btn btn-sm btn-success" href="pages/jadwalPeriksa/status.php?id=' . $row['id_dokter'] . '&status=1">Aktifkan</a>';
+                                            } else {
+                                                echo '<a class="btn btn-sm btn-danger" href="pages/jadwalPeriksa/status.php?id=' . $row['id_dokter'] . '&status=0">Non Aktifkan</a>';
+                                            }
                                             ?>
-                                                <button type='button' class='btn btn-sm btn-warning edit-btn' data-toggle="modal" data-target="#editModal<?php echo $data['id'] ?>" disabled>Edit</button>
-                                                <button type='button' class='btn btn-sm btn-danger edit-btn' data-toggle="modal" data-target="#hapusModal<?php echo $data['id'] ?>" disabled>Hapus</button>
-                                            <?php } else { ?>
-                                                <button type='button' class='btn btn-sm btn-warning edit-btn' data-toggle="modal" data-target="#editModal<?php echo $data['id'] ?>" <?php echo $data['id_dokter'] == $id_dokter ? '' : 'disabled' ?>>Edit</button>
-                                                <button type='button' class='btn btn-sm btn-danger edit-btn' data-toggle="modal" data-target="#hapusModal<?php echo $data['id'] ?>" <?php echo $data['id_dokter'] == $id_dokter ? '' : 'disabled' ?>>Hapus</button>
-                                            <?php } ?>
                                         </td>
                                         <!-- Modal Edit Data Jadwal Periksa -->
                                         <div class="modal fade" id="editModal<?php echo $data['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -214,18 +212,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Modal Hapus Data Obat -->
+                                        <!-- Modal Hapus Data Jadwal -->
                                         <div class="modal fade" id="hapusModal<?php echo $data['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="addModalLabel">Hapus Data Obat</h5>
+                                                        <h5 class="modal-title" id="addModalLabel">Hapus Data Jadwal</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <!-- Form edit data obat disini -->
+                                                        <!-- Form edit data Jadwal disini -->
                                                         <form action="pages/obat/hapusObat.php" method="post">
                                                             <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $data['id'] ?>" required>
                                                             <p>Apakah anda yakin akan menghapus data <span class="font-weight-bold"><?php echo $data['nama_obat'] ?></span>

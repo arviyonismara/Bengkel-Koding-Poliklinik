@@ -59,7 +59,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <!-- Form tambah data obat disini -->
+                                                                <!-- Form tambah Edit pasien -->
 
                                                                 <?php
                                                                 $idDaftarPoli = $data['id'];
@@ -99,7 +99,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <!-- Form tambah data obat disini -->
+                                                                <!-- Form Periksa -->
                                                                 <form action="pages/periksaPasien/periksaPasien.php" method="post">
                                                                     <input type="hidden" name="id" value="<?php echo $data['id'] ?>">
                                                                     <div class="form-group">

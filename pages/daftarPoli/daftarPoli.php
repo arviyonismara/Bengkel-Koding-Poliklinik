@@ -3,12 +3,13 @@ require '../../config/koneksi.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idJadwal = $_POST['jadwal'];
     $keluhan = $_POST['keluhan'];
+    $no_rm = $_POST['no_rm'];
     $noAntrian = 0;
 
     $cariPasien = "SELECT * FROM pasien WHERE no_rm = '$no_rm'";
     $query = mysqli_query($koneksi, $cariPasien);
-    $data = mysqli_fetch_assoc($query);
-    $idPasien = $data['id'];
+    // $data = mysqli_fetch_assoc($query);
+    // $idPasien = $data['id'];
     // echo "<script>alert($idPasien);window.location.href='../logout.php';</script>";
 
     $cekData = "SELECT * FROM daftar_poli";
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $antrianTerakhir = (int) $dataPoli['no_antrian'];
         $antrianBaru = $antrianTerakhir += 1;
 
-        $daftarPoli = "INSERT INTO daftar_poli (id_pasien, id_jadwal, keluhan, no_antrian, status_periksa) VALUES ('$idPasien', '$idJadwal', '$keluhan', '$antrianBaru', '0')";
+        $daftarPoli = "INSERT INTO daftar_poli (id_pasien, id_jadwal, keluhan, no_antrian, status_periksa) VALUES ((SELECT id FROM pasien WHERE no_rm = '$no_rm'), '$idJadwal', '$keluhan', '$antrianBaru', '0')";
         $queryDaftarPoli = mysqli_query($koneksi, $daftarPoli);
         if ($queryDaftarPoli) {
             echo '<script>alert("Berhasil mendaftar poli");window.location.href="../../daftarPoliklinik.php";</script>';
@@ -30,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $noAntrian = 1;
 
-        $daftarPoli = "INSERT INTO daftar_poli (id_pasien, id_jadwal, keluhan, no_antrian, status_periksa) VALUES ('$idPasien', '$idJadwal', '$keluhan', '$noAntrian', '0')";
+        $daftarPoli = "INSERT INTO daftar_poli (id_pasien, id_jadwal, keluhan, no_antrian, status_periksa) VALUES ((SELECT id FROM pasien WHERE no_rm = '$no_rm'), '$idJadwal', '$keluhan', '$noAntrian', '0')";
         $queryDaftarPoli = mysqli_query($koneksi, $daftarPoli);
         if ($queryDaftarPoli) {
             echo '<script>alert("Berhasil mendaftar poli");window.location.href="../../daftarPoliklinik.php"</script>';
