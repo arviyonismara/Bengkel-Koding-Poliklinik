@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 03:13 AM
+-- Generation Time: Jan 07, 2024 at 10:19 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -36,6 +36,17 @@ CREATE TABLE `daftar_poli` (
   `status_periksa` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `daftar_poli`
+--
+
+INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antrian`, `status_periksa`) VALUES
+(9, 11, 11, 'sakit Tenggorokan', 1, '1'),
+(10, 6, 13, 'Anak sakit demam', 1, '1'),
+(11, 6, 11, 'sakit Telinga', 2, '0'),
+(12, 16, 11, 'Sakit Hidung', 3, '0'),
+(13, 17, 11, 'Sakit Pernapasan', 4, '1');
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +58,20 @@ CREATE TABLE `detail_periksa` (
   `id_periksa` int(11) NOT NULL,
   `id_obat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_periksa`
+--
+
+INSERT INTO `detail_periksa` (`id`, `id_periksa`, `id_obat`) VALUES
+(1, 1, 6),
+(2, 1, 7),
+(3, 2, 5),
+(4, 2, 7),
+(5, 2, 8),
+(6, 3, 5),
+(7, 3, 6),
+(8, 3, 7);
 
 -- --------------------------------------------------------
 
@@ -68,10 +93,11 @@ CREATE TABLE `dokter` (
 --
 
 INSERT INTO `dokter` (`id`, `nama`, `password`, `alamat`, `no_hp`, `id_poli`) VALUES
-(4, 'dr. Dian', '', 'jl Tlogosari wetan', '085173849582', 2),
-(5, 'dr. Diah', '', 'jl Gajahmungkur', '085120384728', 3),
-(6, 'dr. Rizal', '9157726f70f3c31cc4a6e222190b322a', 'Tembalang', '08172648392', 1),
-(7, 'Bima', '58cf673f3bf0903e1954d43e25223aaf', 'jl supriyadi', '098239848', 4);
+(7, 'Bima', '58cf673f3bf0903e1954d43e25223aaf', 'jl supriyadi', '098239848', 4),
+(8, 'Arvie', '725a181c5faf543bf7c7f9b734a5a10b', 'Pedurungan', '084728405928', 1),
+(9, 'Rizal', '1ba380abcf4cab6a8e599dbd31dec457', 'Tembalang', '0294909283', 2),
+(10, 'Luki', '984c2c876604f7cc4ad88981f2b4f654', 'Penggaron', '028391029384', 3),
+(11, 'Atha', '7075e6bbd0fd295f228299e9924de872', 'Tembalang', '098123723612', 2);
 
 -- --------------------------------------------------------
 
@@ -84,15 +110,19 @@ CREATE TABLE `jadwal_periksa` (
   `id_dokter` int(11) NOT NULL,
   `hari` enum('senin','selasa','rabu','kamis','jumat','sabtu') NOT NULL,
   `jam_mulai` time NOT NULL,
-  `jam_selesai` time NOT NULL
+  `jam_selesai` time NOT NULL,
+  `status` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `jadwal_periksa`
 --
 
-INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`) VALUES
-(11, 7, 'senin', '09:53:00', '18:39:00');
+INSERT INTO `jadwal_periksa` (`id`, `id_dokter`, `hari`, `jam_mulai`, `jam_selesai`, `status`) VALUES
+(11, 7, 'senin', '09:53:00', '18:39:00', '1'),
+(12, 9, 'sabtu', '09:30:00', '18:00:00', '0'),
+(13, 8, 'kamis', '08:00:00', '17:00:00', '0'),
+(14, 11, 'jumat', '08:20:00', '18:20:00', '0');
 
 -- --------------------------------------------------------
 
@@ -115,7 +145,8 @@ INSERT INTO `obat` (`id`, `nama_obat`, `kemasan`, `harga`) VALUES
 (5, 'Panadol', 'Tablet', 12000),
 (6, 'Neuralgin', 'Tablet', 25000),
 (7, 'Vitamin C', 'Kapsul', 10000),
-(8, 'Yusimox', 'Sirup', 9000);
+(8, 'Yusimox', 'Sirup', 9000),
+(9, 'Paramex', 'Table', 15000);
 
 -- --------------------------------------------------------
 
@@ -144,7 +175,9 @@ INSERT INTO `pasien` (`id`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
 (11, 'Bapul', 'Pedurungan', '098123987345', '94039284920', '202401-005'),
 (13, 'Puji', 'Pedurungan', '33749302948593', '082738492819', '202401-006'),
 (14, 'ismaryastuti', 'Pedurungan', '283948293049283', '029382910392', '202401-007'),
-(15, 'Iona', 'Jogjakarta', '274829381038', '029485920394', '202401-008');
+(15, 'Iona', 'Jogjakarta', '274829381038', '029485920394', '202401-008'),
+(16, 'Dimas', 'Gemah', '312849392', '1029841481024', '202401-009'),
+(17, 'Raihan', 'Pedurungan', '09822131', '120931398', '202401-010');
 
 -- --------------------------------------------------------
 
@@ -159,6 +192,15 @@ CREATE TABLE `periksa` (
   `catatan` text NOT NULL,
   `biaya_periksa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `periksa`
+--
+
+INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_periksa`) VALUES
+(1, 9, '2024-01-08 00:26:00', 'Terkena virus covid-19', 150000),
+(2, 10, '2024-01-08 01:00:00', 'Makan yang banyak', 150000),
+(3, 13, '2024-01-08 04:13:00', 'Makan makanan bergizi', 150000);
 
 -- --------------------------------------------------------
 
@@ -180,7 +222,8 @@ INSERT INTO `poli` (`id`, `nama_poli`, `keterangan`) VALUES
 (1, 'anak', 'Poli klinik anak adalah layanan kesehatan untuk anak sejak dia dilahirkan hingga berusia 18 tahun.'),
 (2, 'gigi', 'Poli Gigi merupakan salah satu dari jenis layanan di puskesmas yang memberikan pelayanan kesehatan gigi dan mulut berupa pemeriksaan kesehatan gigi dan mulut, pengobatan dan pemberian tindakan medis dasar kesehatan gigi dan mulut seperti penambalan gigi, pencabutan gigi dan pembersihan karang gigi'),
 (3, 'kulit & kelamin', 'Poliklinik Kulit dan Kelamin adalah Poliklinik yang bertujuan untuk membantu pasien yang memiliki permasalahan kulit, kecantikan dan penyakit kelamin dengan didukung beberapa dokter ahli spesialis kulit dan kelamin.'),
-(4, 'THT', 'Pemeriksaan THT adalah prosedur untuk melihat adanya masalah terkait telinga, hidung, dan tenggorokan (THT).');
+(4, 'THT', 'Pemeriksaan THT adalah prosedur untuk melihat adanya masalah terkait telinga, hidung, dan tenggorokan (THT).'),
+(5, 'Kanker', 'poliklinik kanker menagnani berbagai masalah kanker.');
 
 -- --------------------------------------------------------
 
@@ -278,49 +321,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `detail_periksa`
 --
 ALTER TABLE `detail_periksa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `jadwal_periksa`
 --
 ALTER TABLE `jadwal_periksa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `poli`
 --
 ALTER TABLE `poli`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
