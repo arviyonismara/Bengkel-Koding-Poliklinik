@@ -147,7 +147,7 @@
                                 <?php
                                 $no = 1;
                                 require 'config/koneksi.php';
-                                $query = "SELECT jadwal_periksa.id, jadwal_periksa.id_dokter, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai, dokter.id AS idDokter, dokter.nama, dokter.alamat, dokter.no_hp, dokter.id_poli, poli.id AS idPoli, poli.nama_poli, poli.keterangan FROM jadwal_periksa INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE id_poli = '$id_poli' AND dokter.id = '$id_dokter'";
+                                $query = "SELECT jadwal_periksa.id, jadwal_periksa.id_dokter, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai, jadwal_periksa.status, dokter.id AS idDokter, dokter.nama, dokter.alamat, dokter.no_hp, dokter.id_poli, poli.id AS idPoli, poli.nama_poli, poli.keterangan FROM jadwal_periksa INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE id_poli = '$id_poli' AND dokter.id = '$id_dokter'";
                                 $result = mysqli_query($koneksi, $query);
 
                                 while ($data = mysqli_fetch_assoc($result)) {
@@ -161,14 +161,10 @@
                                         <td><?php echo $data['jam_selesai'] ?></td>
                                         <td>
                                             <?php
-                                            require 'config/koneksi.php';
-                                            $cekJadwalPeriksa = "SELECT jadwal_periksa.id_dokter, jadwal_periksa.status FROM jadwal_periksa";
-                                            $queryCekJadwal = mysqli_query($koneksi, $cekJadwalPeriksa);
-                                            $row = mysqli_fetch_assoc($queryCekJadwal);
-                                            if ($row['status'] == 0) {
-                                                echo '<a class="btn btn-sm btn-success" href="pages/jadwalPeriksa/status.php?id=' . $row['id_dokter'] . '&status=1">Aktifkan</a>';
+                                            if ($data['status'] == 0) {
+                                                echo '<a class="btn btn-sm btn-success" href="pages/jadwalPeriksa/status.php?id=' . $data['id_dokter'] . '&status=1">Aktifkan</a>';
                                             } else {
-                                                echo '<a class="btn btn-sm btn-danger" href="pages/jadwalPeriksa/status.php?id=' . $row['id_dokter'] . '&status=0">Non Aktifkan</a>';
+                                                echo '<a class="btn btn-sm btn-danger" href="pages/jadwalPeriksa/status.php?id=' . $data['id_dokter'] . '&status=0">Non Aktifkan</a>';
                                             }
                                             ?>
                                         </td>
